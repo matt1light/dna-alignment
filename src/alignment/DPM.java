@@ -11,6 +11,40 @@ public class DPM {
 	// A list of a list of the elements in the matrix. 2d array. First index
 	// represents row number, second represents column.
 	private ArrayList<ArrayList<Element>> elements;
+	
+	//Prints the matrix to the console
+	//If the value of full is true, it will print the populated version of the matrix
+	//If the value of full is false, it will print the initialized unpopulated version of the matrix
+	private void print(String dnaSequence1, String dnaSequence2, boolean full) {
+		System.out.print("\n\t");
+		for (char character : dnaSequence1.toCharArray()) {
+			System.out.print(character + "\t");
+		}
+		for (int i = 0; i < this.getHeight(); i++) {
+			ArrayList<Element> row = this.getElement().get(i);
+			char character = dnaSequence2.toCharArray()[i];
+			System.out.print("\n\n");
+			System.out.print(character + "\t");
+			for (Element element : row) {
+				if (full)
+					System.out.print(element.getScore() + "\t");
+				else
+					System.out.print("0" + "\t");
+			}
+		}
+		System.out.print("\n\n");
+	}
+	
+	//This is the Needleman-Wunsch equation for both match and mismatches
+	//This method is called when populating the matrix and checking the diagonal score of a tile
+	private double score(int row, int column, String dnaSequence1, String dnaSequence2, double matchScore,
+			double mismatchPenalty) {
+		if (dnaSequence1.charAt(column) == dnaSequence2.charAt(row)) {
+			return matchScore;
+		} else {
+			return mismatchPenalty;
+		}
+	}
 
 	// Constructor
 	public DPM(int width, int height, ArrayList<ArrayList<Element>> elements) {
@@ -94,8 +128,8 @@ public class DPM {
 		for (int i = 1; i < this.getHeight(); i++) {
 			double score;
 			if (input.getGapPenalty() == 0) score = 0;
-			else score = -1 * input.getGapPenalty() * i;
-			this.setElementScoreByIndex(i, 0, score * i);
+			else score = (-1 * input.getGapPenalty() * i);
+			this.setElementScoreByIndex(i, 0, score);
 			this.getElementByIndex(i, 0).setUp(true);
 		}
 		//Uses the Needleman Wunsch equations to for each element in the array.
@@ -126,16 +160,6 @@ public class DPM {
 		}
 	}
 
-	//This is the Needleman-Wunsch equation for both match and mismatches
-	//This method is called when populating the matrix and checking the diagonal score of a tile
-	private double score(int row, int column, String dnaSequence1, String dnaSequence2, double matchScore,
-			double mismatchPenalty) {
-		if (dnaSequence1.charAt(column) == dnaSequence2.charAt(row)) {
-			return matchScore;
-		} else {
-			return mismatchPenalty;
-		}
-	}
 
 	//Prints out the populated matrix.
 	//publicly accessible method for printing
@@ -147,29 +171,6 @@ public class DPM {
 	//publicly accessible method for printing
 	public void printEmpty(String dnaSequence1, String dnaSequence2) {
 		this.print(dnaSequence1, dnaSequence2, false);
-	}
-
-	//Prints the matrix to the console
-	//If the value of full is true, it will print the populated version of the matrix
-	//If the value of full is false, it will print the initialized unpopulated version of the matrix
-	private void print(String dnaSequence1, String dnaSequence2, boolean full) {
-		System.out.print("\n\t");
-		for (char character : dnaSequence1.toCharArray()) {
-			System.out.print(character + "\t");
-		}
-		for (int i = 0; i < this.getHeight(); i++) {
-			ArrayList<Element> row = this.getElement().get(i);
-			char character = dnaSequence2.toCharArray()[i];
-			System.out.print("\n\n");
-			System.out.print(character + "\t");
-			for (Element element : row) {
-				if (full)
-					System.out.print(element.getScore() + "\t");
-				else
-					System.out.print("0" + "\t");
-			}
-		}
-		System.out.print("\n\n");
 	}
 
 }

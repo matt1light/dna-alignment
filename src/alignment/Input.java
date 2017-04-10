@@ -11,6 +11,17 @@ public class Input {
 		private double gapPenalty;
 		//constructor
 		
+		private boolean validSequence(String sequence, String constraints){
+			for (char character: sequence.toCharArray()){
+				if (constraints.indexOf(character) < 0){
+					System.out.println("This is not a valid input");
+					System.out.println("Ensure that you only use the characters in " + constraints);
+					return false;
+				}
+			}
+			return true;
+		}
+		
 		public Input(DNA dna1, DNA dna2, double matchScore, double mismatchPenalty, double gapPenalty) {
 			this.dna1 = dna1;
 			this.dna2 = dna2;
@@ -71,19 +82,19 @@ public class Input {
 		public void getSequenceAndInts(){
 			Scanner sc = new Scanner(System.in);
 			System.out.println("What characters would you like to allow in this alignment?: ");
-			String constraints = sc.next();
+			String constraints = sc.nextLine();
 			
 			String sequence1;
 			do {
 			    System.out.println("Enter your first sequence to be aligned:");
-			    sequence1 = sc.next();
+			    sequence1 = sc.nextLine();
 			} while (!this.validSequence(sequence1, constraints));
 			// Verify that the input is valid
 			
 			String sequence2;
 			do {
 			    System.out.println("Enter your second sequence to be aligned");
-			    sequence2 = sc.next();
+			    sequence2 = sc.nextLine();
 			} while (!this.validSequence(sequence2, constraints));
 			//Verify that the input is valid
 			
@@ -136,17 +147,6 @@ public class Input {
 			this.setMismatchPenalty(mismatch);
 			this.setGapPenalty(gap);
 			
-		}
-		
-		private boolean validSequence(String sequence, String constraints){
-			for (char character: sequence.toCharArray()){
-				if (constraints.indexOf(character) < 0){
-					System.out.println("This is not a valid input");
-					System.out.println("Ensure that you only use the characters in " + constraints);
-					return false;
-				}
-			}
-			return true;
 		}
 		
 }
