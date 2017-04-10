@@ -55,7 +55,7 @@ public class DnaSequencer {
 		do {
 
 			// while case is not exit, go through the menu
-			System.out.println("\nThe optimal alignment alignment score is " + this.getDPM().getLastElement().getScore());
+			System.out.println("\nThe optimal alignment score is " + this.getDPM().getLastElement().getScore());
 			System.out.println("What would you like to do next?");
 			System.out.println("\t1: print both sequences");
 			System.out.println("\t2: print initialized matrix");
