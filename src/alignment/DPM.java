@@ -25,8 +25,9 @@ public class DPM {
 			char character = dnaSequence2.toCharArray()[i];
 			System.out.print("\n\n");
 			System.out.print(character + "\t");
-			for (Element element : row) {
-				if (full)
+			for (int j = 0; j< this.getWidth(); j++) {
+				Element element = row.get(j);
+				if (full || j == 0 || i == 0)
 					System.out.print(element.getScore() + "\t");
 				else
 					System.out.print("0" + "\t");
@@ -42,7 +43,7 @@ public class DPM {
 		if (dnaSequence1.charAt(column) == dnaSequence2.charAt(row)) {
 			return matchScore;
 		} else {
-			return mismatchPenalty;
+			return -1*mismatchPenalty;
 		}
 	}
 
