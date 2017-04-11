@@ -136,8 +136,8 @@ public class Input {
 				}
 			} while (mismatch < 0);
 						
-			this.setDna1(new DNA(1, " " + sequence1));
-			this.setDna2(new DNA(2, " " + sequence2));
+			this.setDna1(new DNA(1, sequence1));
+			this.setDna2(new DNA(2, sequence2));
 			this.setMatchScore(match);
 			this.setMismatchPenalty(mismatch);
 			this.setGapPenalty(gap);

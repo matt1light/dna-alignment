@@ -45,7 +45,7 @@ public class DnaSequencer {
 	
 	//public method for testing various scenarios from JUNIT
 	public void runTest(String sequence1, String sequence2, double matchScore, double gapPenalty, double mismatchPenalty){
-		this.setInput(new Input(new DNA(1, sequence1), new DNA(2, sequence2), matchScore, gapPenalty, mismatchPenalty));
+		this.setInput(new Input(new DNA(1, " " + sequence1), new DNA(2, " " + sequence2), matchScore, gapPenalty, mismatchPenalty));
 		this.setTraceback(new Traceback());
 		this.initializeMatrix();
 		this.populateMatrix();
@@ -65,6 +65,7 @@ public class DnaSequencer {
 	private void getUserInputs() {
 		this.input.getSequenceAndInts();
 	}
+	
 	
 	//Prints the initialized matrix without values
 	private void printInitializedMatrix() {

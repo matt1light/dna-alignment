@@ -9,7 +9,7 @@ public class DNA {
 	//Could randomly generate id, but not necessary as only two dna objects will be made in the current version of the program
 	public DNA(int id, String sequence){
 		this.id = id;
-		this.sequence = sequence;
+		this.sequence = " " + sequence;
 	}
 	//default constructor
 	public DNA(){
