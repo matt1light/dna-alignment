@@ -3,15 +3,6 @@ package alignment;
 import java.util.*;
 
 public class DnaSequencer {
-	
-	public static void main(String[] args){
-		Input input = new Input();
-		Traceback traceback = new Traceback();
-		DnaSequencer dnasequencer = new DnaSequencer();
-		dnasequencer.setInput(input);
-		dnasequencer.setTraceback(traceback);
-		dnasequencer.simulate();
-	}
 
 	private DPM matrix;
 	private Input input;
@@ -29,15 +20,6 @@ public class DnaSequencer {
 	//Prints the Needleman Wunsch populated matrix
 	private void printPopulatedMatrix(){
 		this.getDPM().printFull(this.getInput().getDna1().getSequence(), this.getInput().getDna2().getSequence());
-	}
-
-	// gets user inputs performs calculations and opens menu
-	private void simulate(){
-		this.getUserInputs();
-		this.initializeMatrix();
-		this.populateMatrix();
-		this.traceback();
-		this.menu();
 	}
 	
 	//Initializes the matrix DPM from user inputs
@@ -151,7 +133,14 @@ public class DnaSequencer {
 		this.traceback = traceback;
 	}
 
-	
+	// gets user inputs performs calculations and opens menu
+	public void simulate(){
+		this.getUserInputs();
+		this.initializeMatrix();
+		this.populateMatrix();
+		this.traceback();
+		this.menu();
+	}
 
 	
 	
