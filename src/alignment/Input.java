@@ -146,7 +146,12 @@ public class Input {
 		
 		//Checks if all of characters in sequence are contained in the string constraints
 		//Returns true all are. Returns false if any are not.
+		//Returns false if sequence is 1 or smaller
 		private boolean validSequence(String sequence, String constraints){
+			if (sequence.length()<=1){
+				System.out.print("Input must be longer than one character");
+				return false;
+			}
 			for (char character: sequence.toCharArray()){
 				if (constraints.indexOf(character) < 0){
 					System.out.println("This is not a valid input");
