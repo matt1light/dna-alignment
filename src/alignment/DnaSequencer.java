@@ -8,6 +8,60 @@ public class DnaSequencer {
 	private Input input;
 	private Traceback traceback;
 	
+	//Constructor, takes matrix, input and traceback as arguments
+	public DnaSequencer(DPM matrix, Input input, Traceback traceback) {
+		this.matrix = matrix;
+		this.input = input;
+		this.traceback = traceback;
+	}
+
+	//Default constructor
+	public DnaSequencer() {
+	}
+
+	public DPM getDPM() {
+		return matrix;
+	}
+
+	public void setDPM(DPM matrix) {
+		this.matrix = matrix;
+	}
+
+	public Input getInput() {
+		return input;
+	}
+
+	public void setInput(Input input) {
+		this.input = input;
+	}
+
+	public Traceback getTraceback() {
+		return traceback;
+	}
+
+	public void setTraceback(Traceback traceback) {
+		this.traceback = traceback;
+	}
+	
+	//public method for testing various scenarios from JUNIT
+	public void runTest(String sequence1, String sequence2, double matchScore, double gapPenalty, double mismatchPenalty){
+		this.setInput(new Input(new DNA(1, sequence1), new DNA(2, sequence2), matchScore, gapPenalty, mismatchPenalty));
+		this.setTraceback(new Traceback());
+		this.initializeMatrix();
+		this.populateMatrix();
+		this.traceback();
+	}
+
+	// gets user inputs performs calculations and opens menu
+	public void simulate(){
+		this.getUserInputs();
+		this.initializeMatrix();
+		this.populateMatrix();
+		this.traceback();
+		this.menu();
+	}
+	
+	//Calls input to get user Inputs
 	private void getUserInputs() {
 		this.input.getSequenceAndInts();
 	}
@@ -17,7 +71,7 @@ public class DnaSequencer {
 		this.getDPM().printEmpty(this.getInput().getDna1().getSequence(), this.getInput().getDna2().getSequence());
 	}
 	
-	//Prints the Needleman Wunsch populated matrix
+	//Prints the Needleman-Wunsch populated matrix
 	private void printPopulatedMatrix(){
 		this.getDPM().printFull(this.getInput().getDna1().getSequence(), this.getInput().getDna2().getSequence());
 	}
@@ -31,12 +85,20 @@ public class DnaSequencer {
 		this.getDPM().initialize();
 	}
 	
+	//The menu after traceback has been completed
+	//User has the option to:
+	//Print the sequences
+	//Print the initialized matrix
+	//Print the populated matrix
+	//Print the first optimal alignment
+	//Print all the optimal alignments (technically first 1000)
+	//Reinput sequences and score values
+	//Exit the application
 	private void menu() {
 			
 		String choice = "";
 		do {
 
-			// while case is not exit, go through the menu
 			System.out.println("\nThe optimal alignment score is " + this.getDPM().getLastElement().getScore());
 			System.out.println("What would you like to do next?");
 			System.out.println("\t1: print both sequences");
@@ -97,49 +159,6 @@ public class DnaSequencer {
 	private void traceback(){
 		// initializes the root and adds it to the leaves list
 		this.getTraceback().runTraceback(this.getDPM());	
-	}
-	
-	
-	public DnaSequencer(DPM matrix, Input input, Traceback traceback) {
-		this.matrix = matrix;
-		this.input = input;
-		this.traceback = traceback;
-	}
-
-	public DnaSequencer() {
-	}
-
-	public DPM getDPM() {
-		return matrix;
-	}
-
-	public void setDPM(DPM matrix) {
-		this.matrix = matrix;
-	}
-
-	public Input getInput() {
-		return input;
-	}
-
-	public void setInput(Input input) {
-		this.input = input;
-	}
-
-	public Traceback getTraceback() {
-		return traceback;
-	}
-
-	public void setTraceback(Traceback traceback) {
-		this.traceback = traceback;
-	}
-
-	// gets user inputs performs calculations and opens menu
-	public void simulate(){
-		this.getUserInputs();
-		this.initializeMatrix();
-		this.populateMatrix();
-		this.traceback();
-		this.menu();
 	}
 
 	

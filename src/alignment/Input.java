@@ -9,19 +9,8 @@ public class Input {
 		private double matchScore;
 		private double mismatchPenalty;
 		private double gapPenalty;
+		
 		//constructor
-		
-		private boolean validSequence(String sequence, String constraints){
-			for (char character: sequence.toCharArray()){
-				if (constraints.indexOf(character) < 0){
-					System.out.println("This is not a valid input");
-					System.out.println("Ensure that you only use the characters in " + constraints);
-					return false;
-				}
-			}
-			return true;
-		}
-		
 		public Input(DNA dna1, DNA dna2, double matchScore, double mismatchPenalty, double gapPenalty) {
 			this.dna1 = dna1;
 			this.dna2 = dna2;
@@ -79,6 +68,14 @@ public class Input {
 			System.out.println(this.dna2.getSequence());
 		}
 		
+		//Gets User input of the two sequences and the three score parameters
+		//First it asks the user to input a string to represent the set of allowable characters to be aligned
+		//Next it gets both sequences
+		//If any of the characters in the sequences are not contained in constraints, it prompts the user to try again
+		//Next it gets the three scoring parameters
+		//If the input are not doubles (or ints), or if matchScore is 0 it prompts the user to try again
+		//All values are stored as positive integers (absolute value is taken), 
+		//It is assumed that matchScore is positive and should be added, and that the two penalties should be subtracted
 		public void getSequenceAndInts(){
 			Scanner sc = new Scanner(System.in);
 			System.out.println("What characters would you like to allow in this alignment?: ");
@@ -89,14 +86,12 @@ public class Input {
 			    System.out.println("Enter your first sequence to be aligned:");
 			    sequence1 = sc.nextLine();
 			} while (!this.validSequence(sequence1, constraints));
-			// Verify that the input is valid
 			
 			String sequence2;
 			do {
 			    System.out.println("Enter your second sequence to be aligned");
 			    sequence2 = sc.nextLine();
 			} while (!this.validSequence(sequence2, constraints));
-			//Verify that the input is valid
 			
 			double match = 0;
 			do {
@@ -107,7 +102,7 @@ public class Input {
 				}
 				catch (InputMismatchException e) {
 					System.out.println("This is not a valid input");
-					System.out.println("Ensure that you type a number");
+					System.out.println("Ensure that you type non-zero number");
 					sc.next();
 				}
 			} while (match <= 0);
@@ -149,7 +144,19 @@ public class Input {
 			
 		}
 		
+		//Checks if all of characters in sequence are contained in the string constraints
+		//Returns true all are. Returns false if any are not.
+		private boolean validSequence(String sequence, String constraints){
+			for (char character: sequence.toCharArray()){
+				if (constraints.indexOf(character) < 0){
+					System.out.println("This is not a valid input");
+					System.out.println("Ensure that you only use the characters in " + constraints);
+					return false;
+				}
+			}
+			return true;
+		}
+		
 }
-		//case exceptions
 		
 	

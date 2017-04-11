@@ -11,43 +11,7 @@ public class Traceback {
 	//List of the first node of each of the optimal alignments
 	private ArrayList<TracebackNode> routes;
 	
-	//Adds all the next nodes as children of "parent" determined by the direction value in the matrix.
-	//Parent is the node for which it's children are added
-	//matrix is the DPM for which the traceback is performed on
-	//Returns true if any children are added, and false if none are.
-	private boolean addNextNodes(TracebackNode parent, DPM matrix){
-		Element element = parent.getElement();
-		ArrayList<TracebackNode> leaves = this.getLeaves();
-		boolean success = false;
-		if (element.isLeft()){
-			leaves.add(parent.addChildNode(matrix.getElementByIndex(element.getRow(), element.getColumn()-1)));
-			success = true;
-		}
-		if (element.isUp()){
-			leaves.add(parent.addChildNode(matrix.getElementByIndex(element.getRow()-1, element.getColumn())));
-			success = true;
-		}
-		if (element.isDiagonal()){
-			leaves.add(parent.addChildNode(matrix.getElementByIndex(element.getRow()-1, element.getColumn()-1)));
-			success = true;
-		}
-		return success;
-	}
-	
-	//Traces back all optimal routes found in matrix
-	//Capped off at 1000 optimal alignments
-	//Adds all optimal alignments to routes
-	private void traceFromLeaves(DPM matrix){
-		ArrayList<TracebackNode> leaves = this.getLeaves();
-		while(!leaves.isEmpty() && routes.size()<1000){
-			int index = leaves.size()-1;
-			if (!this.addNextNodes(leaves.get(index), matrix)){
-				routes.add(leaves.get(index));
-			}
-			leaves.remove(index);
-		}
-	}
-	
+
 	//Constructor
 	public Traceback(TracebackNode root, ArrayList<TracebackNode> leaves, ArrayList<TracebackNode> routes) {
 		this.root = root;
@@ -98,6 +62,44 @@ public class Traceback {
 		this.setupRoot(matrix.getLastElement());
 		this.traceFromLeaves(matrix);	
 	}
+	
+	//Adds all the next nodes as children of "parent" determined by the direction value in the matrix.
+	//Parent is the node for which it's children are added
+	//matrix is the DPM for which the traceback is performed on
+	//Returns true if any children are added, and false if none are.
+	private boolean addNextNodes(TracebackNode parent, DPM matrix){
+		Element element = parent.getElement();
+		ArrayList<TracebackNode> leaves = this.getLeaves();
+		boolean success = false;
+		if (element.isLeft()){
+			leaves.add(parent.addChildNode(matrix.getElementByIndex(element.getRow(), element.getColumn()-1)));
+			success = true;
+		}
+		if (element.isUp()){
+			leaves.add(parent.addChildNode(matrix.getElementByIndex(element.getRow()-1, element.getColumn())));
+			success = true;
+		}
+		if (element.isDiagonal()){
+			leaves.add(parent.addChildNode(matrix.getElementByIndex(element.getRow()-1, element.getColumn()-1)));
+			success = true;
+		}
+		return success;
+	}
+	
+	//Traces back all optimal routes found in matrix
+	//Capped off at 1000 optimal alignments
+	//Adds all optimal alignments to routes
+	private void traceFromLeaves(DPM matrix){
+		ArrayList<TracebackNode> leaves = this.getLeaves();
+		while(!leaves.isEmpty() && routes.size()<1000){
+			int index = leaves.size()-1;
+			if (!this.addNextNodes(leaves.get(index), matrix)){
+				routes.add(leaves.get(index));
+			}
+			leaves.remove(index);
+		}
+	}
+	
 	
 	//Prints the optimal alignment determined by the traceback and stored in routes.
 	//Navigates from the node of index "index" through to the route and prints the corresponding letters/gaps.

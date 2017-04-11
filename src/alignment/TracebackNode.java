@@ -10,16 +10,19 @@ public class TracebackNode {
 	//The data contained in these nodes are elements. These refer to specific indexes of the array, containing score and direction
 	private Element element;
 	
+	//Constructor takes, parent, children and element arguments
 	public TracebackNode(TracebackNode parent, ArrayList<TracebackNode> children, Element element) {
 		this.parent = parent;
 		this.children = children;
 		this.element = element;
 	}
 	
+	//Default constructor initializes the children array list as it will be added to and not set
 	public TracebackNode(){
 		this.children = new ArrayList<TracebackNode>();
 	}
 	
+	//Getters and setters
 	public TracebackNode getParent() {
 		return parent;
 	}
@@ -38,11 +41,11 @@ public class TracebackNode {
 	public void setElement(Element element) {
 		this.element = element;
 	}
-	
+	//Checks if the node is a root (has no parent)
 	public boolean isRoot(){
 		return (this.parent != null);
 	}
-	
+	//Checks if the node is a leaf (has no children)
 	public boolean isLeaf(){
 		return (this.children.isEmpty());
 	}
