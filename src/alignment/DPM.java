@@ -73,6 +73,7 @@ public class DPM {
 		}
 	}
 
+	// returns the last element in the matrix (index height-1, width - 1)
 	public Element getLastElement() {
 		return this.getElementByIndex(height - 1, width - 1);
 	}

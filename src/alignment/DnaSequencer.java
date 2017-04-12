@@ -4,8 +4,14 @@ import java.util.*;
 
 public class DnaSequencer {
 
+	// Dynamic Programming matrix where the needleman Wunsch algorithm is
+	// performed
 	private DPM matrix;
+	// User input object that gets user input and stores all the data for this
+	// instance
 	private Input input;
+	// Traceback performs traceback of the matrix and stores all optimal
+	// alignment routes
 	private Traceback traceback;
 
 	// Constructor, takes matrix, input and traceback as arguments
@@ -19,6 +25,7 @@ public class DnaSequencer {
 	public DnaSequencer() {
 	}
 
+	// Getters and setters
 	public DPM getDPM() {
 		return matrix;
 	}
@@ -52,6 +59,15 @@ public class DnaSequencer {
 		this.initializeMatrix();
 		this.populateMatrix();
 		this.traceback();
+	}
+	
+	// public method for running the program, Called by DnaApp
+	public void run() {
+		Input input = new Input();
+		Traceback traceback = new Traceback();
+		this.setInput(input);
+		this.setTraceback(traceback);
+		this.simulate();
 	}
 
 	// gets user inputs performs calculations and opens menu
