@@ -8,8 +8,8 @@ public class Element {
 	private boolean diagonal;
 	private int row;
 	private int column;
-	//change directions and location to an array if we want
-	
+	// change directions and location to an array if we want
+
 	public Element(double score, boolean left, boolean up, boolean diagonal, int row, int column) {
 		this.score = score;
 		this.left = left;
@@ -18,13 +18,12 @@ public class Element {
 		this.row = row;
 		this.column = column;
 	}
-	
-	public Element(double score, int row, int column){
+
+	public Element(double score, int row, int column) {
 		this(score, false, false, false, row, column);
 	}
-	
-	public Element()
-	{
+
+	public Element() {
 		this(0, false, false, false, 0, 0);
 	}
 
@@ -75,11 +74,9 @@ public class Element {
 	public void setColumn(int column) {
 		this.column = column;
 	}
-	
-	public boolean isFirst(){
+
+	public boolean isFirst() {
 		return (this.column == 0 && this.row == 0);
 	}
-	
-	
-	
+
 }

@@ -77,30 +77,38 @@ public class DPM {
 		return this.getElementByIndex(height - 1, width - 1);
 	}
 
-	//Populates all of the element values and directions in the matrix based on Needleman-Wunsch Algorithm
-	//For more information on the Needlemen-Wunsch Algorithm go to https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
+	// Populates all of the element values and directions in the matrix based on
+	// Needleman-Wunsch Algorithm
+	// For more information on the Needlemen-Wunsch Algorithm go to
+	// https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
 	public void populate(Input input) {
-		//Initializes each of the elements in the first row of the matrix, with the value of gap penalty, multiplied by its horizontal index
-		//Sets each of their left directions to true
+		// Initializes each of the elements in the first row of the matrix, with
+		// the value of gap penalty, multiplied by its horizontal index
+		// Sets each of their left directions to true
 		for (int i = 1; i < this.getWidth(); i++) {
 			double score;
-			if (input.getGapPenalty() == 0) score = 0;
-			else score = -1 * input.getGapPenalty() * i;
+			if (input.getGapPenalty() == 0)
+				score = 0;
+			else
+				score = -1 * input.getGapPenalty() * i;
 			this.setElementScoreByIndex(0, i, score);
 			this.getElementByIndex(0, i).setLeft(true);
 		}
-		//Initializes each of the elements in the first column of the matrix, with the value of gap penalty, multiplied by its vertical index
-		//Sets each of their up directions to true
+		// Initializes each of the elements in the first column of the matrix,
+		// with the value of gap penalty, multiplied by its vertical index
+		// Sets each of their up directions to true
 		for (int i = 1; i < this.getHeight(); i++) {
 			double score;
-			if (input.getGapPenalty() == 0) score = 0;
-			else score = (-1 * input.getGapPenalty() * i);
+			if (input.getGapPenalty() == 0)
+				score = 0;
+			else
+				score = (-1 * input.getGapPenalty() * i);
 			this.setElementScoreByIndex(i, 0, score);
 			this.getElementByIndex(i, 0).setUp(true);
 		}
-		//Uses the Needleman Wunsch equations to for each element in the array.
-		//Determines which direction or directions have the highest value
-		//Sets the elements value and directions
+		// Uses the Needleman Wunsch equations to for each element in the array.
+		// Determines which direction or directions have the highest value
+		// Sets the elements value and directions
 		for (int i = 1; i < this.getHeight(); i++) {
 			for (int j = 1; j < this.getWidth(); j++) {
 				double diag = this.getElementByIndex(i - 1, j - 1).getScore()
@@ -125,34 +133,36 @@ public class DPM {
 			}
 		}
 	}
-	
-	//This is the Needleman-Wunsch equation for both match and mismatches
-	//This method is called when populating the matrix and checking the diagonal score of a tile
+
+	// This is the Needleman-Wunsch equation for both match and mismatches
+	// This method is called when populating the matrix and checking the
+	// diagonal score of a tile
 	private double score(int row, int column, String dnaSequence1, String dnaSequence2, double matchScore,
 			double mismatchPenalty) {
 		if (dnaSequence1.charAt(column) == dnaSequence2.charAt(row)) {
 			return matchScore;
 		} else {
-			return -1*mismatchPenalty;
+			return -1 * mismatchPenalty;
 		}
 	}
 
-
-	//Prints out the populated matrix.
-	//publicly accessible method for printing
+	// Prints out the populated matrix.
+	// publicly accessible method for printing
 	public void printFull(String dnaSequence1, String dnaSequence2) {
 		this.print(dnaSequence1, dnaSequence2, true);
 	}
 
-	//Prints out the initialized matrix. (not populated/ all values 0)
-	//publicly accessible method for printing
+	// Prints out the initialized matrix. (not populated/ all values 0)
+	// publicly accessible method for printing
 	public void printEmpty(String dnaSequence1, String dnaSequence2) {
 		this.print(dnaSequence1, dnaSequence2, false);
 	}
-	
-	//Prints the matrix to the console
-	//If the value of full is true, it will print the populated version of the matrix
-	//If the value of full is false, it will print the initialized unpopulated version of the matrix
+
+	// Prints the matrix to the console
+	// If the value of full is true, it will print the populated version of the
+	// matrix
+	// If the value of full is false, it will print the initialized unpopulated
+	// version of the matrix
 	private void print(String dnaSequence1, String dnaSequence2, boolean full) {
 		System.out.print("\n\t");
 		for (char character : dnaSequence1.toCharArray()) {
@@ -163,7 +173,7 @@ public class DPM {
 			char character = dnaSequence2.toCharArray()[i];
 			System.out.print("\n\n");
 			System.out.print(character + "\t");
-			for (int j = 0; j< this.getWidth(); j++) {
+			for (int j = 0; j < this.getWidth(); j++) {
 				Element element = row.get(j);
 				if (full || j == 0 || i == 0)
 					System.out.print(element.getScore() + "\t");
@@ -173,7 +183,5 @@ public class DPM {
 		}
 		System.out.print("\n\n");
 	}
-	
-
 
 }
