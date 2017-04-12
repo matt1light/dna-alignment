@@ -60,7 +60,7 @@ public class DnaSequencer {
 		this.populateMatrix();
 		this.traceback();
 	}
-	
+
 	// public method for running the program, Called by DnaApp
 	public void run() {
 		Input input = new Input();
