@@ -61,6 +61,43 @@ public class TracebackNode <Data> {
 		return (this.children.isEmpty());
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((children == null) ? 0 : children.hashCode());
+		result = prime * result + ((element == null) ? 0 : element.hashCode());
+		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TracebackNode<Data> other = (TracebackNode<Data>) obj;
+		if (children == null) {
+			if (other.children != null)
+				return false;
+		} else if (!children.equals(other.children))
+			return false;
+		if (element == null) {
+			if (other.element != null)
+				return false;
+		} else if (!element.equals(other.element))
+			return false;
+		if (parent == null) {
+			if (other.parent != null)
+				return false;
+		} else if (!parent.equals(other.parent))
+			return false;
+		return true;
+	}
+
 	// Constructs a child node referring to the Element element
 	// Sets the child node's parent to the calling node
 	public TracebackNode<Data> addChildNode(Data element) {

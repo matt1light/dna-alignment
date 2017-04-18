@@ -34,6 +34,43 @@ public class Traceback {
 		this.root = root;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((leaves == null) ? 0 : leaves.hashCode());
+		result = prime * result + ((root == null) ? 0 : root.hashCode());
+		result = prime * result + ((routes == null) ? 0 : routes.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Traceback other = (Traceback) obj;
+		if (leaves == null) {
+			if (other.leaves != null)
+				return false;
+		} else if (!leaves.equals(other.leaves))
+			return false;
+		if (root == null) {
+			if (other.root != null)
+				return false;
+		} else if (!root.equals(other.root))
+			return false;
+		if (routes == null) {
+			if (other.routes != null)
+				return false;
+		} else if (!routes.equals(other.routes))
+			return false;
+		return true;
+	}
+
 	public ArrayList<TracebackNode<Element>> getLeaves() {
 		return leaves;
 	}
