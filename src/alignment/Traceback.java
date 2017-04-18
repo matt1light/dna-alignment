@@ -6,14 +6,14 @@ public class Traceback {
 
 	// Root of the tree. In this case it will refer to the last element in the
 	// matrix.
-	private TracebackNode root;
+	private TracebackNode<Element> root;
 	// List of leaves of the tree
-	private ArrayList<TracebackNode> leaves;
+	private ArrayList<TracebackNode<Element>> leaves;
 	// List of the first node of each of the optimal alignments
-	private ArrayList<TracebackNode> routes;
+	private ArrayList<TracebackNode<Element>> routes;
 
 	// Constructor
-	public Traceback(TracebackNode root, ArrayList<TracebackNode> leaves, ArrayList<TracebackNode> routes) {
+	public Traceback(TracebackNode<Element> root, ArrayList<TracebackNode<Element>> leaves, ArrayList<TracebackNode<Element>> routes) {
 		this.root = root;
 		this.leaves = leaves;
 		this.routes = routes;
@@ -21,32 +21,32 @@ public class Traceback {
 
 	// Default constructor
 	public Traceback() {
-		this.root = new TracebackNode();
-		this.leaves = new ArrayList<TracebackNode>();
-		this.routes = new ArrayList<TracebackNode>();
+		this.root = new TracebackNode<Element>();
+		this.leaves = new ArrayList<TracebackNode<Element>>();
+		this.routes = new ArrayList<TracebackNode<Element>>();
 	}
 
-	public TracebackNode getRoot() {
+	public TracebackNode<Element> getRoot() {
 		return root;
 	}
 
-	public void setRoot(TracebackNode root) {
+	public void setRoot(TracebackNode<Element> root) {
 		this.root = root;
 	}
 
-	public ArrayList<TracebackNode> getLeaves() {
+	public ArrayList<TracebackNode<Element>> getLeaves() {
 		return leaves;
 	}
 
-	public void setLeaves(ArrayList<TracebackNode> leaves) {
+	public void setLeaves(ArrayList<TracebackNode<Element>> leaves) {
 		this.leaves = leaves;
 	}
 
-	public ArrayList<TracebackNode> getRoutes() {
+	public ArrayList<TracebackNode<Element>> getRoutes() {
 		return routes;
 	}
 
-	public void setRoutes(ArrayList<TracebackNode> routes) {
+	public void setRoutes(ArrayList<TracebackNode<Element>> routes) {
 		this.routes = routes;
 	}
 
@@ -69,9 +69,9 @@ public class Traceback {
 	// Parent is the node for which it's children are added
 	// matrix is the DPM for which the traceback is performed on
 	// Returns true if any children are added, and false if none are.
-	private boolean addNextNodes(TracebackNode parent, DPM matrix) {
+	private boolean addNextNodes(TracebackNode<Element> parent, DPM matrix) {
 		Element element = parent.getElement();
-		ArrayList<TracebackNode> leaves = this.getLeaves();
+		ArrayList<TracebackNode<Element>> leaves = this.getLeaves();
 		boolean success = false;
 		if (element.isLeft()) {
 			leaves.add(parent.addChildNode(matrix.getElementByIndex(element.getRow(), element.getColumn() - 1)));
@@ -92,7 +92,7 @@ public class Traceback {
 	// Capped off at 1000 optimal alignments
 	// Adds all optimal alignments to routes
 	private void traceFromLeaves(DPM matrix) {
-		ArrayList<TracebackNode> leaves = this.getLeaves();
+		ArrayList<TracebackNode<Element>> leaves = this.getLeaves();
 		while (!leaves.isEmpty() && routes.size() < 1000) {
 			int index = leaves.size() - 1;
 			if (!this.addNextNodes(leaves.get(index), matrix)) {
@@ -107,7 +107,7 @@ public class Traceback {
 	// Navigates from the node of index "index" through to the route and prints
 	// the corresponding letters/gaps.
 	public void printAlignment(DNA dna1, DNA dna2, int index) {
-		TracebackNode current = this.routes.get(index);
+		TracebackNode<Element> current = this.routes.get(index);
 		String sequence1 = dna1.getSequence();
 		String sequence2 = dna2.getSequence();
 		int counter = 1;
@@ -132,4 +132,6 @@ public class Traceback {
 			this.printAlignment(dna1, dna2, i);
 		}
 	}
+	
+	
 }
