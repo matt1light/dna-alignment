@@ -1,7 +1,10 @@
 package alignment;
 
+import java.util.Random;
+
 public class DNA {
-	
+
+	public static int lastId = 0;
 	private int id;
 	private String sequence;
 	
@@ -9,11 +12,16 @@ public class DNA {
 	//Could randomly generate id, but not necessary as only two dna objects will be made in the current version of the program
 	public DNA(int id, String sequence){
 		this.id = id;
-		this.sequence = " " + sequence;
+		this.sequence = sequence;
+	}
+	//overloaded constructor with an id of one more than the last DNA strand's id and buffer space for matrix
+	public DNA(String sequence){
+		this(++lastId, " " + sequence);
 	}
 	//default constructor
 	public DNA(){
 	}
+	
 	//Getters and Setters
 	public int getId() {
 		return id;
