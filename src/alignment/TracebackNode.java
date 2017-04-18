@@ -53,7 +53,7 @@ public class TracebackNode <Data> {
 
 	// Checks if the node is a root (has no parent)
 	public boolean isRoot() {
-		return (this.parent != null);
+		return (this.parent == null);
 	}
 
 	// Checks if the node is a leaf (has no children)
